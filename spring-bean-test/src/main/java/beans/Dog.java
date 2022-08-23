@@ -1,11 +1,11 @@
 package beans;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.Environment;
 
 /**
@@ -40,27 +41,37 @@ public class Dog implements ApplicationContextAware, BeanFactoryAware, Environme
     private Environment environment;
 
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-        logger.debug("beanFactory工厂增强");
+        logger.info("beanFactory工厂增强");
     }
 
     public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
-        logger.debug("1 init()方法执行前，属性设置后");
+        logger.info("1 init()方法执行前，属性设置后");
         return null;
     }
     public void afterPropertiesSet() {
-        logger.warn("2 init（）方法执行前执行");
+        logger.info("2 init（）方法执行前执行");
     }
     /**
      * 自定义“初始话”方法
      */
     public void init() {
-        logger.warn("属性此时已初始化完毕");
-        logger.warn(JSON.toJSONString(beanFactory));
+        logger.info("属性此时已初始化完毕");
+        logger.info(JSON.toJSONString(beanFactory));
     }
 
     public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
-        logger.debug("初始化后，bean增强器");
+        logger.info("初始化后，bean增强器");
         return null;
+    }
+
+    /**
+     * debug 去观察bean的声明周期
+     * @param args
+     */
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        Dog dog = (Dog) context.getBean("dog");
+        System.out.println(dog);
     }
 
 
