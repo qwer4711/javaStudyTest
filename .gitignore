@@ -1,3 +1,5 @@
+## 该文件移出版本控制。即改动点不在"unversioned Files"中显示
+
 # Compiled class file
 *.class
 
@@ -25,10 +27,5 @@ hs_err_pid*
 /hello-world-demo/hello-world-demo.iml
 *.iml
 Maven_*.xml
-/.idea/compiler.xml
-/.idea/jarRepositories.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/uiDesigner.xml
-/.idea/vcs.xml
-/.idea/.gitignore
+/.idea/
+*/target/*

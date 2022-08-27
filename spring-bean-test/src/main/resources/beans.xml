@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <beans>
-        <bean id="dog" class="beans.Dog">
+        <bean id="dog" class="beans.Dog" init-method="init">
             <property name="names" value="wangwang"></property>
             <property name="ages" value="3"></property>
         </bean>

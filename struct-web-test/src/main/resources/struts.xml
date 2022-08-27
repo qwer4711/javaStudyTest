@@ -5,12 +5,23 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <package name="yb1" namespace="/yb1" extends="struts-default">
+    <package name="yuban1" namespace="/yb1" extends="struts-default">
+
+<!--        定义所有action的返回结果映射。即：返回“index"时，到index.vm界面-->
+        <global-results>
+            <result name="index">/WEB-INF/vm/index.vm</result>
+        </global-results>
+
+
         <action name="hello" class="action.HelloAction">
-            <result name="success">index.jsp</result>
+<!--            资源路径-->
+            <result name="success">/WEB-INF/vm/index.vm</result>
+        </action>
+        <action name="params" class="action.YuBanAction">
+            <result name="success">/WEB-INF/vm/yb1/index.vm</result>
         </action>
     </package>
-    <package name="yb2" namespace="/yb1">
+    <package name="yuban2" namespace="/yb2" extends="struts-default">
 
     </package>
 </struts>
