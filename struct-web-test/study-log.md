@@ -5,5 +5,9 @@
     https://blog.csdn.net/qq_31729869/article/details/124377118
     
     struct2: web添加映射     struct.xml创建url请求路径和 类（继承Action）处理关系。 result
+  
+2 struts 页面传递值。 坑：struct.xml放在resource目录文件下，<action>的<result></result>中路径问题，应该为/WEB-INF/下路径
+    //TODO 后续需要学习vm页面知识
+    
     
     
