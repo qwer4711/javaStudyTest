@@ -1,0 +1,16 @@
+<html>
+<head>
+    #parse("/WEB-INF/vm/common/config.vm")
+    <title>御坂登陆页面</title>
+</head>
+
+<body>
+<h1>御坂网络登陆页面,只允许小御坂登陆</h1>
+<form action="loginAction.login" method="post">
+    御坂编号:<input type="text" name="userName" value='$!userName'/>
+    御坂ID:<input type="text" name="password" value='$!password'/>
+    <br>
+    <input type="submit" value="尝试连接御坂网络...">
+</form>
+</body>
+</html>

@@ -23,6 +23,26 @@
       <artifactId>struts2-core</artifactId>
       <version>2.5.14.1</version>
     </dependency>
+<!--    velocity模板引擎-->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-tools</artifactId>
+      <version>2.0</version>
+    </dependency>
+
+
+
+<!--    web编码过滤-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>4.2.2.RELEASE</version>
+    </dependency>
   </dependencies>
 
 </project>

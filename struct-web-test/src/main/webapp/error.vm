@@ -1,0 +1,8 @@
+<html>
+<head>
+    #parse("/WEB-INF/vm/common/config.vm")
+</head>
+<body>
+御坂网络发生故障，御坂们正在紧急修复,请稍后尝试...
+</body>
+</html>

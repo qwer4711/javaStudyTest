@@ -5,23 +5,93 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
+    <!--拦截后缀-->
+    <constant name="struts.action.extension" value="action,html"></constant>
+    <!--乱码-->
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+
+
     <package name="yuban1" namespace="/yb1" extends="struts-default">
 
 <!--        定义所有action的返回结果映射。即：返回“index"时，到index.vm界面-->
         <global-results>
+<!--            /:指webApp路径.-->
             <result name="index">/WEB-INF/vm/index.vm</result>
         </global-results>
 
 
         <action name="hello" class="action.HelloAction">
 <!--            资源路径-->
-            <result name="success">/WEB-INF/vm/index.vm</result>
+            <result name="success" type="velocity">/WEB-INF/vm/index.vm</result>
         </action>
         <action name="params" class="action.YuBanAction">
             <result name="success">/WEB-INF/vm/yb1/index.vm</result>
         </action>
     </package>
+
+<!--    yb2模块:登陆功能,学习struts2一些功能-->
     <package name="yuban2" namespace="/yb2" extends="struts-default">
+<!--        请求链接测试:http://localhost:8080/yb2/login.action?userName=yuban&password=123456   -->
+
+        <!-- type:dispatcher属性 保留传递传递值 url不变-->
+        <action name="login" class="action.LoginAction" method="login" >
+            <result name="success" type="velocity">/WEB-INF/vm/yb2/login.vm</result>
+        </action>
+        <!--type:redirect重定向页面  属性值丢失, 浏览器url改变   -->
+        <action name="loginRedirect" class="action.LoginAction" method="login">
+            <result name="success" type="redirect">/index.jsp</result>
+        </action>
+        <!--type:redirectAction重定向动作  属性值丢失-->
+        <action name="loginRedirectAction" class="action.LoginAction" method="login">
+            <result name="success" type="redirectAction">login</result>
+        </action>
+        <!--type:chain重定向动作  属性值保留-->
+        <action name="loginChain" class="action.LoginAction" method="login">
+            <result name="success" type="chain">login</result>
+        </action>
+        <!--type:redirectAction重定向动作  跨模块请求测试-->
+        <action name="loginRedict2" class="action.LoginAction" method="login">
+            <!-- TODO 版本问题待解决            -->
+            <result name="success" type="redirectAction"><param name="namespace">/yb1</param><param name="actionName">hello</param></result>
+        </action>
+
+    </package>
+
+    <package name="yuban3" namespace="/yb3" extends="struts-default">
+
+<!--        定义拦截器-->
+        <interceptors>
+            <interceptor name="interceptor1" class="interceptor.Interceptor1"></interceptor>
+            <interceptor name="interceptor2" class="interceptor.Interceptor2"></interceptor>
+            <interceptor name="interceptor3" class="interceptor.Interceptor3"></interceptor>
+            <interceptor-stack name="yb2-interceptors">
+                <interceptor-ref name="interceptor1"></interceptor-ref>
+                <interceptor-ref name="interceptor2"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+<!--        表示下面的action均使用该action拦截-->
+        <default-interceptor-ref name="yb2-interceptors"></default-interceptor-ref>
+
+<!--        定义全局页面。好处：不用在每个action中添加这些映射逻辑-->
+        <global-results>
+            <!--表示使用velocity模板输出结果，location指定模板的位置-->
+            <result name="home" type="velocity">/WEB-INF/vm/yb2/home.vm</result>
+            <result name="lost" type="velocity">/WEB-INF/vm/yb2/lostHome.vm</result>
+            <!--type 重定向。交给类ybHelper处理-->
+            <result name="error" type="redirect">error.action</result>
+            <!--默认值 /index.jsp指根路径下index.jsp..-->
+            <result name="meet" type="dispatcher">/index.jsp</result>
+        </global-results>
+
+
+
+<!--struts2单独使用时，action的class属性为类的全路径名，如下.          Spring整合时则应为bean-->
+        <action name="error" method="error" class="action.YBHelper"></action>
+        <action name="interceptor3">
+            <!--使用interceptors + interceptor3进行拦截-->
+            <interceptor-ref name="interceptor3"></interceptor-ref>
+        </action>
+
 
     </package>
 </struts>
